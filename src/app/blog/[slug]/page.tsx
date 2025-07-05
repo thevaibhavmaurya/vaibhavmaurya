@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Button } from "@/components/ui/button";
@@ -134,6 +135,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
           {/* Article Header */}
           <AnimatedDiv animation="slide-up" delay={0.1}>
+            <div className="relative aspect-[50/21] overflow-hidden rounded-lg bg-muted shadow-lg mb-12">
+              <Image
+                src={post.image || ""}
+                alt={post.title}
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+                priority
+              />
+            </div>
+
             <header className="mb-12 space-y-6">
               <div className="space-y-6">
                 <h1 className="text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
