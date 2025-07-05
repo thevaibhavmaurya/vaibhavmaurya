@@ -1,0 +1,299 @@
+---
+title: "Getting Started with Next.js 14"
+excerpt: "Learn how to build modern web applications with Next.js 14, featuring the new App Router, Server Components, and improved performance."
+publishedAt: "2024-01-15"
+tags: ["nextjs", "react", "javascript", "web-development"]
+featured: true
+author: "Vaibhav Maurya"
+readingTime: 8
+image: "https://dev-to-uploads.s3.amazonaws.com/uploads/articles/jrfx5aaujbqh8x7vfvp7.png"
+seo:
+  title: "Getting Started with Next.js 14 - Complete Guide"
+  description: "Comprehensive guide to building modern web applications with Next.js 14"
+  keywords:
+    ["nextjs", "react", "app router", "server components", "web development"]
+---
+
+When you're posting 5-6 posts per day on multiple accounts, you obviously can't be posting at night while sleeping. Work-life balance is important, right? I know it's hard to believe these kinds of scenarios actually work, but it really depends on your use case.
+
+## Table of Contents
+
+- [What you'll need](#what-youll-need)
+- [Why n8n?](#why-n8n)
+- [First Workflow - Monitoring File Uploads](#first-workflow---monitoring-file-uploads)
+- [Second Workflow - Active Posting](#second-workflow---active-posting)
+- [Done!](#done)
+
+I built this automation system for posting across multiple Instagram accounts. The setup is pretty straightforward once you understand the flow.
+
+Here's how it works: Users upload video files to a specific Google Drive folder. The first n8n workflow continuously monitors this folder and updates a spreadsheet record. The second workflow handles the actual posting at scheduled intervals.
+
+## What you'll need
+
+- Google Drive folder for video uploads
+- Connected Google Sheets for record keeping
+- Two n8n workflows (one for monitoring, one for posting)
+- Instagram Post API access
+- Server or domain to host your n8n instance
+
+## Why n8n?
+
+n8n is perfect for small workflows, though you can definitely build complex ones too. It's easy to use and developer-friendly. Similar to Zapier but better in my opinion. The main reason I chose it was that we already had an n8n server running with some existing workflows.
+
+> **Problem**: How do we get descriptions for the posts?
+
+## First Workflow - Monitoring File Uploads
+
+![First Workflow](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rtv9691blkudp7arlzg6.png)
+
+**Step 1:** Create a workflow with a suitable name.
+
+**Step 2:** Add a schedule trigger node. This triggers the workflow at every interval.
+
+**Step 3:** Format the date here. I find the `fromDate` and `toDate` values. Since we fetch file info from Google Drive, we need to make sure we don't fetch files that have already been processed. So we only fetch files within that time interval.
+
+![Date formatting](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vjm8u2p58imqm7vjrfhw.png)
+
+**Step 4:** Get Google OAuth credentials:
+
+- Go to [Google Console](https://console.cloud.google.com/)
+- Create a new project
+- Navigate to the Credentials section
+- Search for `Google Drive API` and `Google Sheets API` and enable them
+- Generate `OAuth 2.0 Client ID` and `API Key` - save these for later
+
+![Google credentials](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/p7fv5p41a2u00p6x5vnb.png)
+
+**Step 5:** Add Google Drive Node:
+
+- Configure your credentials
+- Create a new folder in Google Drive and add the folder name here
+- Add the folder name and filter query string like: `createdTime > '{{ $json.fromDate }}' and createdTime < '{{ $json.toDate }}'`
+
+![Google Drive node](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/wsycx9vbk4ag1zhc4srl.png)
+
+**Step 6:** Extract content using Code Node:
+
+**Posts Description Problem**: This can be fixed by setting the description in the file name. Just remove the extension from the file name. Simple, right? 😁
+
+Since n8n doesn't provide createdAt, we set the current date here.
+
+```javascript
+function removeExtension(filename) {
+  return filename.replace(/\.[^/.]+$/, "");
+}
+
+const data = $input.all();
+const sheetData = data.map(({ json }) => {
+  const name = removeExtension(json.name);
+  return { ...json, name, createdAt: $("Format Date").first().json.toDate };
+});
+
+return sheetData;
+```
+
+![Code node](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/b9o2cez43lt8uhirl1a9.png)
+
+**Step 7:** Save to Google Sheets:
+
+I chose Google Sheets because it's easy to connect and use in workflows.
+
+Create a spreadsheet with these columns:
+
+- id
+- name
+- createdAt
+- mimeType
+- trashed
+- isPostedProviderOne
+- isPostedProviderTwo
+- isPostedProviderThree
+- isPostedProviderFour
+- isPostedProviderFive
+- webViewLink
+
+Add the Google Sheets node, use the same credentials, choose "append row" operation, and select your spreadsheet.
+
+![Google Sheets setup](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/q6vv7nor1607gahasx99.png)
+
+![Google Sheets node](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/j6ra629n6yiqkqs8xiqu.png)
+
+That's it for the first workflow. Now let's implement the second workflow.
+
+## Second Workflow - Active Posting
+
+![Second workflow](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ytkkvzarpijim4bfz7uq.png)
+
+**Step 1:** Create a new workflow for posting.
+
+**Step 2:** Add a schedule trigger node and set the interval according to your needs.
+
+**Step 3:** Fetch all files from the spreadsheet.
+
+![Fetch files](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/m5fxuoioagb40asqs8zr.png)
+
+**Step 4:** Add a Code node with the core logic:
+
+Here's what I implemented:
+
+- Every day, each account posts unique content
+- Each provider posts 5-6 posts daily
+- Once a video is published on one account, other accounts won't post the same video on the same day
+
+```javascript
+const files = $input.all();
+const today = new Date().toISOString().split("T")[0];
+const apiKey = "google-oauth-api-key";
+const provider = "INSTAGRAM";
+
+// Provider IDs - you'll get these from successful Instagram OAuth
+const providerIds = {
+  isPostedProviderOne: "account-id-1",
+  isPostedProviderTwo: "account-id-2",
+  isPostedProviderThree: "account-id-3",
+  isPostedProviderFour: "account-id-4",
+  isPostedProviderFive: "account-id-5",
+};
+
+const posts = [];
+const usedFilesToday = new Set();
+const usedProvidersToday = new Set();
+const providersEverUsed = new Set();
+
+const isPostedToday = (dateStr) =>
+  typeof dateStr === "string" && dateStr.startsWith(today);
+
+for (const { json } of files) {
+  const { id, name, ...providerStatuses } = json;
+  if (!id || usedFilesToday.has(id)) continue;
+
+  const providerSlots = Object.entries(providerStatuses).filter(([key]) =>
+    key.startsWith("isPostedProvider")
+  );
+
+  const alreadyPostedToday = providerSlots.some(([, value]) =>
+    isPostedToday(value)
+  );
+  if (alreadyPostedToday) continue;
+
+  for (const [key, value] of providerSlots) {
+    if (value?.trim()) {
+      providersEverUsed.add(key);
+      continue;
+    }
+
+    if (usedProvidersToday.has(key) || providersEverUsed.has(key)) continue;
+
+    posts.push({
+      key,
+      rawData: json,
+      postData: {
+        id: `snapshot-${id}`,
+        version: 1,
+        content: name,
+        contentRaw: name,
+        status: "DRAFT",
+        plannedFor: null,
+        mediaUrls: [
+          `https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${apiKey}`,
+        ],
+        parentId: null,
+        selectedText: null,
+        style: null,
+        prompt: null,
+        mediaMetadata: null,
+        jobId: null,
+        publishJobId: null,
+        postId: `post-${id}`,
+        providerId: providerIds[key],
+        provider,
+        post: { postType: "INSTAGRAM_REELS" },
+      },
+    });
+
+    usedFilesToday.add(id);
+    usedProvidersToday.add(key);
+    providersEverUsed.add(key);
+    break; // Only assign one provider per file
+  }
+
+  if (posts.length >= 5) break;
+}
+
+return posts;
+```
+
+**Step 5:** Since I'm using our project internal API for Instagram posting, the content is formatted accordingly. **Instagram Post API will be covered in upcoming blog posts.** You can write your own API post logic here.
+
+The output looks like this:
+
+```json
+[
+  {
+    "key": "isPostedProviderTwo",
+    "rawData": {
+      "row_number": 2,
+      "id": "1NG0TFK1sp3AjOY3710yiOnSNvGQoUneF",
+      "name": "This is place where boats get lift #boat",
+      "createdAt": "2025-07-03T11:15:30.007Z",
+      "mimeType": "video/mp4",
+      "trashed": false,
+      "isPostedProviderOne": "2025-07-03T11:18:24.819Z",
+      "isPostedProviderTwo": "",
+      "isPostedProviderThree": "",
+      "isPostedProviderFour": "",
+      "isPostedProviderFive": "",
+      "webViewLink": "https://drive.google.com/file/d/1NG0TFK1sp3AjOY3710yiOnSNvGQoUneF/view?usp=drivesdk"
+    },
+    "postData": {
+      "id": "snapshot-1NG0TFK1sp3AjOY3710yiOnSNvGQoUneF",
+      "version": 1,
+      "content": "This is place where boats get lift #boat",
+      "contentRaw": "This is place where boats get lift #boat",
+      "status": "DRAFT",
+      "plannedFor": null,
+      "mediaUrls": [
+        "https://www.googleapis.com/drive/v3/files/1NG0TFK1sp3AjOY3710yiOnSNvGQoUneF?alt=media&key=AIzaSyAm5aV22g3a1upJeLWZSPWc3MG8Yz9oHI0"
+      ],
+      "parentId": null,
+      "selectedText": null,
+      "style": null,
+      "prompt": null,
+      "mediaMetadata": null,
+      "jobId": null,
+      "publishJobId": null,
+      "postId": "post-1NG0TFK1sp3AjOY3710yiOnSNvGQoUneF",
+      "providerId": "sdfsdfsdf",
+      "provider": "INSTAGRAM",
+      "post": {
+        "postType": "INSTAGRAM_REELS"
+      }
+    }
+  }
+]
+```
+
+**Step 6:** Add a "Loop Over Items" node so we can iterate over all the items.
+
+**Step 7:** Add an "HTTP Request" node to make the API request for posting.
+
+**Step 8:** Once successful, add another Code node to update the current date for the selected provider:
+
+```javascript
+return {
+  ...$("Loop Over Items").first().json.rawData,
+  [$("Loop Over Items").first().json.key]: `${new Date().toISOString()}`,
+};
+```
+
+**Step 9:** Add Google Sheets node, select "Update Row" operation by ID.
+
+![Update row](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/zbd58a02mhbwzqp4jozq.png)
+
+## Done!
+
+I know it's a bit tricky if you don't know about n8n, but it's easy once you get started. This will definitely save you time. Whenever you're done with video creation, just upload it to Google Drive. No need to worry about the posting process. You can even customize it if you want posts to go live at specific times every day.
+
+![Thank You](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/e7b6xk28unxahpask3xf.webp)
+
+If you enjoyed this post or learned something new, feel free to connect with me on [GitHub](https://github.com/thevaibhavmaurya), [Twitter](https://www.x.com/hevaibhavmaurya/) or [LinkedIn](https://www.linkedin.com/in/thevaibhavmaurya/). I often share dev stories, lessons, and mistakes — so follow along for more! 🚀👨‍💻✨
