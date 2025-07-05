@@ -1,32 +1,27 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Calendar, Clock, Share2 } from "lucide-react";
+import { ArrowLeft, Calendar, Clock } from "lucide-react";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import PageLayout from "@/components/layout/PageLayout";
-import {
-  getBlogPost,
-  getBlogPostSlugs,
-  getPostsByTag,
-} from "@/lib/services/blog";
-import { siteConfig } from "@/lib/config/site";
-import RelatedPosts from "@/components/organisms/RelatedPosts";
-import MotionDiv from "@/components/atoms/MotionDiv";
-import Image from "next/image";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import MdxComponents from "@/components/mdx/MdxComponents";
+import RelatedPosts from "@/components/organisms/RelatedPosts";
+import { getBlogPost, getAllBlogPosts } from "@/lib/services/blog";
+import { siteConfig } from "@/lib/config/site";
+import AnimatedDiv from "@/components/atoms/AnimatedDiv";
 
 interface BlogPostPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  const slugs = getBlogPostSlugs();
-  return slugs.map((slug) => ({ slug }));
+  const posts = await getAllBlogPosts();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
 }
 
 export async function generateMetadata({
@@ -73,63 +68,72 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  const formattedDate = new Date(post.publishedAt).toLocaleDateString("en-US", {
+  const allPosts = await getAllBlogPosts();
+  const relatedPosts = allPosts
+    .filter((p) => p.slug !== post.slug)
+    .filter((p) => p.tags.some((tag) => post.tags.includes(tag)))
+    .slice(0, 3);
+
+  const publishedDate = new Date(post.publishedAt);
+  const formattedDate = publishedDate.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
 
-  // Get related posts based on tags
-  const relatedPosts = await getPostsByTag(post.tags[0] || "");
-  const filteredRelatedPosts = relatedPosts
-    .filter((p) => p.slug !== post.slug)
-    .slice(0, 3);
+  // Structured data for blog post
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    image: post.image || `${siteConfig.url}/images/blog/${post.slug}.jpg`,
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
+    author: {
+      "@type": "Person",
+      name: post.author,
+      url: siteConfig.url,
+    },
+    publisher: {
+      "@type": "Person",
+      name: siteConfig.author.name,
+      logo: {
+        "@type": "ImageObject",
+        url: siteConfig.ogImage,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}/blog/${post.slug}`,
+    },
+    keywords: post.tags.join(", "),
+    timeRequired: `PT${post.readingTime}M`,
+    wordCount: post.content.split(" ").length,
+  };
 
   return (
     <PageLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
       <article className="container py-12">
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
-          <MotionDiv
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-8"
-          >
-            <Button asChild variant="ghost" size="sm">
+          <AnimatedDiv animation="slide-up" className="mb-8">
+            <Button variant="ghost" size="sm" asChild className="group">
               <Link href="/blog">
-                <ArrowLeft className="mr-2 h-4 w-4" />
+                <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
                 Back to Blog
               </Link>
             </Button>
-          </MotionDiv>
-
-          {/* Featured Image */}
-          {post.image && (
-            <MotionDiv
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="mb-8"
-            >
-              <div className="relative aspect-[50/21] w-full overflow-hidden rounded-xl">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            </MotionDiv>
-          )}
+          </AnimatedDiv>
 
           {/* Article Header */}
-          <MotionDiv
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          <AnimatedDiv animation="slide-up" delay={0.1}>
             <header className="mb-12 space-y-6">
               <div className="space-y-6">
                 <h1 className="text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
@@ -167,54 +171,42 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
               <Separator />
             </header>
-          </MotionDiv>
+          </AnimatedDiv>
 
           {/* Article Content - MDX */}
-          <MotionDiv
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <div className="mdx-content">
-              <MDXRemote source={post.content} components={MdxComponents} />
-            </div>
-          </MotionDiv>
+          <div className="mdx-content">
+            <MDXRemote source={post.content} components={MdxComponents} />
+          </div>
 
           {/* Article Footer */}
-          <MotionDiv
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <footer className="mt-16 pt-8 border-t">
-              <div className="flex items-center justify-between">
-                <div className="space-y-2">
+          <AnimatedDiv animation="fade-in" className="mt-16">
+            <footer className="space-y-8">
+              <Separator />
+
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div className="space-y-1">
                   <p className="text-sm text-muted-foreground">
                     Published on {formattedDate}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Written by {post.author}
+                    {post.readingTime} minute read
                   </p>
                 </div>
 
-                <Button variant="outline" size="sm">
-                  <Share2 className="mr-2 h-4 w-4" />
-                  Share Article
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button size="sm" variant="outline" asChild>
+                    <Link href="/blog">← More Articles</Link>
+                  </Button>
+                </div>
               </div>
             </footer>
-          </MotionDiv>
+          </AnimatedDiv>
 
           {/* Related Posts */}
-          {filteredRelatedPosts.length > 0 && (
-            <MotionDiv
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-16"
-            >
-              <RelatedPosts posts={filteredRelatedPosts} />
-            </MotionDiv>
+          {relatedPosts.length > 0 && (
+            <AnimatedDiv animation="slide-up" className="mt-16">
+              <RelatedPosts posts={relatedPosts} />
+            </AnimatedDiv>
           )}
         </div>
       </article>

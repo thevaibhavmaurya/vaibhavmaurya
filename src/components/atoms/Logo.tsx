@@ -10,7 +10,7 @@ export default function Logo({ className }: LogoProps) {
     <Link
       href="/"
       className={cn(
-        "text-2xl font-bold text-foreground hover:text-foreground/80 transition-colors",
+        "text-lg font-semibold text-foreground hover:text-foreground/80 transition-colors",
         className
       )}
     >

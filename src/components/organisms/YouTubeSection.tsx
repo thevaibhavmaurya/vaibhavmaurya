@@ -1,37 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { ExternalLink, Play } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import MotionDiv from "@/components/atoms/MotionDiv";
+import AnimatedDiv from "@/components/atoms/AnimatedDiv";
 
 export default function YouTubeSection() {
   return (
     <section className="py-20 bg-muted/30">
       <div className="container">
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <AnimatedDiv animation="slide-up" className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
             Latest Video
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Watch my latest tutorials and insights on web development
           </p>
-        </MotionDiv>
+        </AnimatedDiv>
 
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="max-w-4xl mx-auto"
-        >
+        <div className="max-w-4xl mx-auto">
           <Card className="overflow-hidden border-0 shadow-lg py-0">
             <CardContent className="p-0">
               <div className="relative aspect-video bg-muted flex items-center justify-center group cursor-pointer">
@@ -46,22 +34,16 @@ export default function YouTubeSection() {
               </div>
             </CardContent>
           </Card>
-        </MotionDiv>
+        </div>
 
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="text-center mt-8"
-        >
+        <AnimatedDiv animation="fade-in" className="text-center mt-8">
           <Button asChild variant="outline" size="lg" className="group">
             <Link href="https://youtube.com/@thevaibhavmaurya" target="_blank">
               Visit YouTube Channel
               <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
-        </MotionDiv>
+        </AnimatedDiv>
       </div>
     </section>
   );

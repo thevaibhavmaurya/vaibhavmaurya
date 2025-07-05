@@ -9,8 +9,8 @@ export const siteConfig: SiteConfig = {
   author: {
     name: "Vaibhav Maurya",
     email: "hello@vaibhavmaurya.dev",
-    phone: "+1234567890",
-    location: "Lucknow, Uttar Pradesh, India",
+    // phone: "+1234567890",
+    location: "Lucknow, India",
     twitter: "https://twitter.com/hevaibhavmaurya",
     github: "https://github.com/thevaibhavmaurya",
     linkedin: "https://linkedin.com/in/thevaibhavmaurya",

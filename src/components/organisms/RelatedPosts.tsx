@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import BlogCard from "@/components/molecules/BlogCard";
 import { BlogPost } from "@/lib/types/blog";
-import MotionDiv from "@/components/atoms/MotionDiv";
 
 interface RelatedPostsProps {
   posts: BlogPost[];
@@ -25,15 +24,10 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {posts.map((post, index) => (
-          <MotionDiv
-            key={post.slug}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-          >
+        {posts.map((post) => (
+          <div key={post.slug}>
             <BlogCard post={post} />
-          </MotionDiv>
+          </div>
         ))}
       </div>
 

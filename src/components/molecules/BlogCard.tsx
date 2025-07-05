@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, Clock, ArrowRight, FileText } from "lucide-react";
+import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BlogPost } from "@/lib/types/blog";
@@ -32,10 +32,6 @@ export default function BlogCard({ post, className }: BlogCardProps) {
             alt={post.title}
             fill
             className="transition-transform duration-300 group-hover:scale-105"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = "none";
-            }}
           />
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />

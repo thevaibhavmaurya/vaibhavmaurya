@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import BlogCard from "@/components/molecules/BlogCard";
 import { BlogPost } from "@/lib/types/blog";
-import MotionDiv from "@/components/atoms/MotionDiv";
 
 interface BlogGridProps {
   posts: BlogPost[];
@@ -41,12 +40,7 @@ export default function BlogGrid({ posts }: BlogGridProps) {
 
   return (
     <div className="space-y-8">
-      <MotionDiv
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="space-y-6"
-      >
+      <div className="space-y-6">
         <div className="relative max-w-md">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
@@ -104,7 +98,7 @@ export default function BlogGrid({ posts }: BlogGridProps) {
             </span>
             {searchTerm && (
               <Badge variant="secondary" className="gap-1">
-                Search: "{searchTerm}"
+                Search: &quot;{searchTerm}&quot;
                 <Button
                   variant="ghost"
                   size="icon"
@@ -130,7 +124,7 @@ export default function BlogGrid({ posts }: BlogGridProps) {
             )}
           </div>
         )}
-      </MotionDiv>
+      </div>
 
       <div className="text-sm text-muted-foreground">
         {filteredPosts.length === posts.length
@@ -140,16 +134,10 @@ export default function BlogGrid({ posts }: BlogGridProps) {
 
       {filteredPosts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredPosts.map((post, index) => (
-            <MotionDiv
-              key={post.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
+          {filteredPosts.map((post) => (
+            <div key={post.slug}>
               <BlogCard post={post} />
-            </MotionDiv>
+            </div>
           ))}
         </div>
       ) : (

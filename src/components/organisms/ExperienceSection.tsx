@@ -1,16 +1,14 @@
-"use client";
-
 import { Building, Calendar, MapPin } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import MotionDiv from "@/components/atoms/MotionDiv";
+import AnimatedTitle from "@/components/atoms/AnimatedTitle";
 
 const experiences = [
   {
     id: 1,
-    company: "Kyte",
+    company: "Kyte Research",
     position: "Software Engineer",
-    duration: "Fab 2025 - Present",
+    duration: "Feb 2025 - Present",
     location: "Remote",
     description:
       "Building AirLyft.One, a comprehensive Web3 growth hacking platform that solves blockchain marketing challenges. Developing features for bot-resistant campaigns, dynamic rewards distribution, smart contract integration, and AI-powered spam protection. Created seamless user onboarding experience and migrated from SQL to GraphQL architecture for better scalability and performance.",
@@ -36,24 +34,21 @@ const experiences = [
     description:
       "Developed and maintained multiple client projects using WordPress and PHP, handling both frontend and backend development. Led the development of CatalogueWala.com, a subscription-based e-commerce platform enabling users to create and manage digital catalogues. Implemented custom themes, plugins, and database optimization for enhanced performance and user experience.",
     technologies: [
-      "Wordpress",
+      "WordPress",
       "PHP",
       "MySQL",
       "HTML",
       "CSS",
       "JavaScript",
-      "ReactJs",
-      "NodeJs",
-      "MySQL",
-      "hPanel",
-      "cPanel",
+      "React",
+      "Node.js",
     ],
     type: "Full-time",
   },
   {
     id: 3,
     company: "Aara Technologies",
-    position: "React Js Developer Intern",
+    position: "React Js Developer",
     duration: "Jun 2024 - Aug 2024",
     location: "Lucknow, India",
     description:
@@ -68,7 +63,7 @@ const experiences = [
       "Tailwind CSS",
       "ReactQuery",
     ],
-    type: "Full-time",
+    type: "Internship",
   },
 ];
 
@@ -76,90 +71,77 @@ export default function ExperienceSection() {
   return (
     <section className="py-20 bg-muted/30">
       <div className="container">
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            Professional Experience
-          </h2>
+        <div className="text-center mb-16">
+          <AnimatedTitle
+            title="Work Experience"
+            as="h2"
+            className="text-3xl md:text-4xl font-bold tracking-tight mb-4"
+          />
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            My journey in software development and the companies I've worked
-            with
+            My professional journey in software development and web technologies
           </p>
-        </MotionDiv>
+        </div>
 
         <div className="max-w-4xl mx-auto">
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-border"></div>
-
-            <div className="space-y-8">
-              {experiences.map((experience, index) => (
-                <MotionDiv
-                  key={experience.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="relative"
-                >
-                  {/* Timeline dot */}
-                  <div className="absolute left-6 top-6 w-4 h-4 bg-primary rounded-full border-4 border-background shadow-lg"></div>
-
-                  {/* Content */}
-                  <div className="ml-20">
-                    <Card className="border-none shadow-sm hover:shadow-md transition-shadow duration-300">
-                      <CardContent className="p-6">
-                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                              <Calendar className="h-4 w-4" />
-                              <span>{experience.duration}</span>
-                              <Badge variant="outline" className="ml-2">
-                                {experience.type}
-                              </Badge>
-                            </div>
-                            <h3 className="text-xl font-semibold text-foreground">
-                              {experience.position}
-                            </h3>
-                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                              <div className="flex items-center gap-1">
-                                <Building className="h-4 w-4" />
-                                <span>{experience.company}</span>
-                              </div>
-                              <div className="flex items-center gap-1">
-                                <MapPin className="h-4 w-4" />
-                                <span>{experience.location}</span>
-                              </div>
-                            </div>
-                          </div>
+          <div className="space-y-6">
+            {experiences.map((experience) => (
+              <Card
+                key={experience.id}
+                className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-primary"
+              >
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    {/* Header */}
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                      <div className="space-y-2">
+                        <h3 className="text-xl font-semibold text-foreground">
+                          {experience.position}
+                        </h3>
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          <Building className="h-4 w-4" />
+                          <span className="font-medium text-foreground">
+                            {experience.company}
+                          </span>
                         </div>
+                      </div>
+                      <Badge variant="outline" className="w-fit">
+                        {experience.type}
+                      </Badge>
+                    </div>
 
-                        <p className="text-muted-foreground mb-4 leading-relaxed">
-                          {experience.description}
-                        </p>
+                    {/* Meta info */}
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-4 w-4" />
+                        <span>{experience.duration}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <MapPin className="h-4 w-4" />
+                        <span>{experience.location}</span>
+                      </div>
+                    </div>
 
-                        <div className="flex flex-wrap gap-2">
-                          {experience.technologies.map((tech, index) => (
-                            <Badge
-                              key={`${tech}-${index}`}
-                              variant="secondary"
-                              className="text-xs"
-                            >
-                              {tech}
-                            </Badge>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
+                    {/* Description */}
+                    <p className="text-muted-foreground leading-relaxed">
+                      {experience.description}
+                    </p>
+
+                    {/* Technologies */}
+                    <div className="flex flex-wrap gap-2">
+                      {experience.technologies.map((tech) => (
+                        <Badge
+                          key={tech}
+                          variant="secondary"
+                          className="text-xs"
+                        >
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
-                </MotionDiv>
-              ))}
-            </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </div>

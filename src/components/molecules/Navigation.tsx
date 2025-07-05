@@ -13,13 +13,13 @@ export default function Navigation({ className }: NavigationProps) {
   const pathname = usePathname();
 
   return (
-    <nav className={cn("flex items-center space-x-6", className)}>
+    <nav className={cn("hidden md:flex items-center space-x-8", className)}>
       {navItems.map((item) => (
         <Link
           key={item.href}
           href={item.href}
           className={cn(
-            "text-sm font-medium transition-colors hover:text-foreground/80",
+            "text-sm font-medium transition-colors hover:text-foreground",
             pathname === item.href ? "text-foreground" : "text-foreground/60"
           )}
         >

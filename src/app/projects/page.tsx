@@ -3,7 +3,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import ProjectsGrid from "@/components/organisms/ProjectsGrid";
 import { projects } from "@/lib/data/projects";
 import { siteConfig } from "@/lib/config/site";
-import MotionDiv from "@/components/atoms/MotionDiv";
+import AnimatedDiv from "@/components/atoms/AnimatedDiv";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -29,22 +29,19 @@ export default function ProjectsPage() {
   return (
     <PageLayout>
       <div className="container py-12">
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-            My Projects
+        <AnimatedDiv animation="slide-up" className="max-w-3xl mb-12">
+          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+            Projects
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A collection of web development projects showcasing my skills in
-            frontend, backend, and full-stack development
+          <p className="text-xl text-muted-foreground">
+            A collection of my work showcasing web development projects, from
+            frontend interfaces to full-stack applications.
           </p>
-        </MotionDiv>
+        </AnimatedDiv>
 
-        <ProjectsGrid projects={projects} />
+        <div>
+          <ProjectsGrid projects={projects} />
+        </div>
       </div>
     </PageLayout>
   );

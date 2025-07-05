@@ -1,13 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Github, Youtube } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Project } from "@/lib/types/project";

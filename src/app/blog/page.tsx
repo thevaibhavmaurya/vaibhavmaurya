@@ -3,6 +3,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import BlogGrid from "@/components/organisms/BlogGrid";
 import { getAllBlogPosts } from "@/lib/services/blog";
 import { siteConfig } from "@/lib/config/site";
+import AnimatedDiv from "@/components/atoms/AnimatedDiv";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -22,7 +23,7 @@ export default async function BlogPage() {
   return (
     <PageLayout>
       <div className="container py-12">
-        <div className="max-w-3xl mb-12">
+        <AnimatedDiv animation="slide-up" className="max-w-3xl mb-12">
           <h1 className="text-4xl lg:text-5xl font-bold tracking-tight mb-4">
             Blog
           </h1>
@@ -30,7 +31,7 @@ export default async function BlogPage() {
             Technical articles, tutorials, and insights about web development
             and modern software engineering practices.
           </p>
-        </div>
+        </AnimatedDiv>
 
         <BlogGrid posts={posts} />
       </div>
