@@ -17,7 +17,6 @@ export default function BlogGrid({ posts }: BlogGridProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
-  // Get all unique tags
   const allTags = useMemo(() => {
     const tags = new Set<string>();
     posts.forEach((post) => {
@@ -26,7 +25,6 @@ export default function BlogGrid({ posts }: BlogGridProps) {
     return Array.from(tags).sort();
   }, [posts]);
 
-  // Filter posts based on search and tag
   const filteredPosts = useMemo(() => {
     return posts.filter((post) => {
       const matchesSearch =
@@ -43,14 +41,12 @@ export default function BlogGrid({ posts }: BlogGridProps) {
 
   return (
     <div className="space-y-8">
-      {/* Search and Filter */}
       <MotionDiv
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="space-y-6"
       >
-        {/* Search Input */}
         <div className="relative max-w-md">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
@@ -71,7 +67,6 @@ export default function BlogGrid({ posts }: BlogGridProps) {
           )}
         </div>
 
-        {/* Tag Filter */}
         <div className="space-y-3">
           <h3 className="text-sm font-medium">Filter by Tag:</h3>
           <div className="flex flex-wrap gap-2">
@@ -102,7 +97,6 @@ export default function BlogGrid({ posts }: BlogGridProps) {
           </div>
         </div>
 
-        {/* Active Filters */}
         {(searchTerm || selectedTag) && (
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">
@@ -138,14 +132,12 @@ export default function BlogGrid({ posts }: BlogGridProps) {
         )}
       </MotionDiv>
 
-      {/* Results Count */}
       <div className="text-sm text-muted-foreground">
         {filteredPosts.length === posts.length
           ? `Showing all ${posts.length} articles`
           : `Showing ${filteredPosts.length} of ${posts.length} articles`}
       </div>
 
-      {/* Blog Posts Grid */}
       {filteredPosts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPosts.map((post, index) => (

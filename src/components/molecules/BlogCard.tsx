@@ -21,36 +21,28 @@ export default function BlogCard({ post, className }: BlogCardProps) {
   return (
     <Card
       className={cn(
-        "group overflow-hidden border-0 shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02]",
+        "group overflow-hidden border-0 shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02] py-0",
         className
       )}
     >
       <CardHeader className="p-0">
-        <div className="relative aspect-[16/9] overflow-hidden bg-muted">
+        <div className="relative aspect-[50/21] overflow-hidden bg-muted">
           <Image
-            src={`/images/blog/${post.slug}.jpg`}
+            src={post.image || ""}
             alt={post.title}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="transition-transform duration-300 group-hover:scale-105"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.style.display = "none";
             }}
           />
 
-          {/* Fallback content when image fails to load */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center">
-            <div className="text-center">
-              <FileText className="h-12 w-12 text-primary/60 mx-auto mb-2" />
-              <p className="text-sm font-medium text-primary/80">Blog Post</p>
-            </div>
-          </div>
-
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
           {/* Featured Badge */}
           {post.featured && (
-            <div className="absolute top-4 left-4">
+            <div className="absolute top-4 right-4">
               <Badge
                 variant="secondary"
                 className="bg-primary text-primary-foreground"
@@ -62,7 +54,7 @@ export default function BlogCard({ post, className }: BlogCardProps) {
         </div>
       </CardHeader>
 
-      <CardContent className="p-6">
+      <CardContent className="p-6 pt-0">
         <div className="space-y-4">
           {/* Meta Information */}
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -82,20 +74,20 @@ export default function BlogCard({ post, className }: BlogCardProps) {
           </h3>
 
           {/* Excerpt */}
-          <p className="text-muted-foreground leading-relaxed line-clamp-4">
+          <p className="text-muted-foreground leading-relaxed line-clamp-4 text-sm">
             {post.excerpt}
           </p>
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2">
-            {post.tags.slice(0, 3).map((tag) => (
+            {post.tags.slice(0, 2).map((tag) => (
               <Badge key={tag} variant="outline" className="text-xs">
                 {tag}
               </Badge>
             ))}
-            {post.tags.length > 3 && (
+            {post.tags.length > 2 && (
               <Badge variant="outline" className="text-xs">
-                +{post.tags.length - 3} more
+                +{post.tags.length - 2} more
               </Badge>
             )}
           </div>

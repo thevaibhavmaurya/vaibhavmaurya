@@ -14,7 +14,7 @@ interface RecentBlogsSectionProps {
 export default function RecentBlogsSection({
   posts = [],
 }: RecentBlogsSectionProps) {
-  const recentPosts = posts.slice(0, 2);
+  const recentPosts = posts.filter((post) => post.featured).slice(0, 2);
 
   return (
     <section className="py-20 bg-muted/30">
@@ -36,7 +36,7 @@ export default function RecentBlogsSection({
 
         {recentPosts.length > 0 ? (
           <div className="space-y-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {recentPosts.map((post, index) => (
                 <MotionDiv
                   key={post.slug}

@@ -1,9 +1,9 @@
+import { table } from "console";
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
 
-// Custom wrapper component for MDX content
 function MDXWrapper({ children }: { children: ReactNode }) {
   return (
     <div className="mdx-wrapper">
@@ -12,15 +12,12 @@ function MDXWrapper({ children }: { children: ReactNode }) {
   );
 }
 
-// Custom components for MDX
 const MdxComponents: MDXComponents = {
-  // Wrapper component
   wrapper: MDXWrapper,
 
-  // Headings
   h1: ({ children, ...props }) => (
     <h1
-      className="text-4xl font-bold tracking-tight leading-tight mb-6 mt-8 scroll-mt-24 text-foreground"
+      className="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-6 mt-8 scroll-mt-24 text-foreground"
       {...props}
     >
       {children}
@@ -28,7 +25,7 @@ const MdxComponents: MDXComponents = {
   ),
   h2: ({ children, ...props }) => (
     <h2
-      className="text-3xl font-semibold tracking-tight leading-tight mb-4 mt-8 scroll-mt-24 text-foreground"
+      className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight mb-4 mt-8 scroll-mt-24 text-foreground"
       {...props}
     >
       {children}
@@ -36,7 +33,7 @@ const MdxComponents: MDXComponents = {
   ),
   h3: ({ children, ...props }) => (
     <h3
-      className="text-2xl font-semibold tracking-tight leading-tight mb-4 mt-6 scroll-mt-24 text-foreground"
+      className="text-2xl md:text-3xl font-semibold tracking-tight leading-tight mb-4 mt-6 scroll-mt-24 text-foreground"
       {...props}
     >
       {children}
@@ -44,7 +41,7 @@ const MdxComponents: MDXComponents = {
   ),
   h4: ({ children, ...props }) => (
     <h4
-      className="text-xl font-semibold tracking-tight leading-tight mb-3 mt-6 scroll-mt-24 text-foreground"
+      className="text-xl md:text-2xl font-semibold tracking-tight leading-tight mb-3 mt-6 scroll-mt-24 text-foreground"
       {...props}
     >
       {children}
@@ -52,7 +49,7 @@ const MdxComponents: MDXComponents = {
   ),
   h5: ({ children, ...props }) => (
     <h5
-      className="text-lg font-semibold tracking-tight leading-tight mb-3 mt-4 scroll-mt-24 text-foreground"
+      className="text-lg md:text-xl font-semibold tracking-tight leading-tight mb-3 mt-4 scroll-mt-24 text-foreground"
       {...props}
     >
       {children}
@@ -60,24 +57,22 @@ const MdxComponents: MDXComponents = {
   ),
   h6: ({ children, ...props }) => (
     <h6
-      className="text-base font-semibold tracking-tight leading-tight mb-2 mt-4 scroll-mt-24 text-foreground"
+      className="text-base md:text-lg font-semibold tracking-tight leading-tight mb-2 mt-4 scroll-mt-24 text-foreground"
       {...props}
     >
       {children}
     </h6>
   ),
 
-  // Paragraphs
   p: ({ children, ...props }) => (
     <p
-      className="text-muted-foreground leading-7 mb-6 [&:not(:first-child)]:mt-6"
+      className="text-base md:text-lg text-muted-foreground leading-7 mb-6 [&:not(:first-child)]:mt-6"
       {...props}
     >
       {children}
     </p>
   ),
 
-  // Links
   a: ({ children, href, ...props }) => {
     const isExternal = href?.startsWith("http");
 
@@ -106,7 +101,6 @@ const MdxComponents: MDXComponents = {
     );
   },
 
-  // Lists
   ul: ({ children, ...props }) => (
     <ul className="my-6 ml-6 space-y-2 list-disc [&>li]:mt-2" {...props}>
       {children}
@@ -123,7 +117,6 @@ const MdxComponents: MDXComponents = {
     </li>
   ),
 
-  // Code
   code: ({ children, className, ...props }) => {
     const isInline = !className;
 
@@ -145,7 +138,6 @@ const MdxComponents: MDXComponents = {
     );
   },
 
-  // Code blocks
   pre: ({ children, ...props }) => (
     <pre
       className="mb-4 mt-6 overflow-x-auto rounded-lg border bg-slate-950 p-4 text-sm text-white"
@@ -155,7 +147,6 @@ const MdxComponents: MDXComponents = {
     </pre>
   ),
 
-  // Blockquotes
   blockquote: ({ children, ...props }) => (
     <blockquote
       className="mt-6 border-l-4 border-primary pl-6 italic text-muted-foreground"
@@ -165,13 +156,12 @@ const MdxComponents: MDXComponents = {
     </blockquote>
   ),
 
-  // Images
   img: ({ alt, src, ...props }) => {
     if (!src) return null;
 
     return (
       <Image
-        className="rounded-lg shadow-md my-6"
+        className="rounded-lg shadow-md my-6 w-full h-auto"
         alt={alt || ""}
         src={src}
         width={800}
@@ -183,7 +173,6 @@ const MdxComponents: MDXComponents = {
     );
   },
 
-  // Tables
   table: ({ children, ...props }) => (
     <div className="my-6 w-full overflow-y-auto">
       <table className="w-full border-collapse border border-border" {...props}>
@@ -219,10 +208,8 @@ const MdxComponents: MDXComponents = {
     </td>
   ),
 
-  // Horizontal rule
   hr: ({ ...props }) => <hr className="my-8 border-border" {...props} />,
 
-  // Strong and emphasis
   strong: ({ children, ...props }) => (
     <strong className="font-semibold text-foreground" {...props}>
       {children}

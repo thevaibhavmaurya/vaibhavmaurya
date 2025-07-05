@@ -144,9 +144,9 @@ export default function ExperienceSection() {
                         </p>
 
                         <div className="flex flex-wrap gap-2">
-                          {experience.technologies.map((tech) => (
+                          {experience.technologies.map((tech, index) => (
                             <Badge
-                              key={tech}
+                              key={`${tech}-${index}`}
                               variant="secondary"
                               className="text-xs"
                             >

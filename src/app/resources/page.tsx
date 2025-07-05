@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import PageLayout from "@/components/layout/PageLayout";
 import ResourcesGrid from "@/components/organisms/ResourcesGrid";
 import { siteConfig } from "@/lib/config/site";
+import MotionDiv from "@/components/atoms/MotionDiv";
 
 export const metadata: Metadata = {
   title: "Resources",
@@ -19,7 +20,12 @@ export default function ResourcesPage() {
   return (
     <PageLayout>
       <div className="container py-12">
-        <div className="max-w-3xl mb-12">
+        <MotionDiv
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mb-12"
+        >
           <h1 className="text-4xl lg:text-5xl font-bold tracking-tight mb-4">
             Resources
           </h1>
@@ -27,9 +33,15 @@ export default function ResourcesPage() {
             A curated collection of tools, libraries, tutorials, and resources
             that I find useful for web development and design.
           </p>
-        </div>
+        </MotionDiv>
 
-        <ResourcesGrid />
+        <MotionDiv
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <ResourcesGrid />
+        </MotionDiv>
       </div>
     </PageLayout>
   );

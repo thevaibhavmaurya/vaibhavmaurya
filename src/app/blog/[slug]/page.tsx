@@ -112,7 +112,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mb-8"
             >
-              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl">
+              <div className="relative aspect-[50/21] w-full overflow-hidden rounded-xl">
                 <Image
                   src={post.image}
                   alt={post.title}
@@ -158,8 +158,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
 
               <div className="flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <Badge key={tag} variant="outline">
+                {post.tags.map((tag, index) => (
+                  <Badge key={`${tag}-${index}`} variant="outline">
                     {tag}
                   </Badge>
                 ))}

@@ -6,6 +6,7 @@ export interface Project {
   tags: string[];
   liveUrl?: string;
   githubUrl?: string;
+  youtubeUrl?: string;
   caseStudyUrl?: string;
   featured: boolean;
   category: ProjectCategory;

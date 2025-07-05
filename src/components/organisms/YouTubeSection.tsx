@@ -32,21 +32,17 @@ export default function YouTubeSection() {
           viewport={{ once: true }}
           className="max-w-4xl mx-auto"
         >
-          <Card className="overflow-hidden border-0 shadow-lg">
+          <Card className="overflow-hidden border-0 shadow-lg py-0">
             <CardContent className="p-0">
               <div className="relative aspect-video bg-muted flex items-center justify-center group cursor-pointer">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="relative z-10 text-center">
-                  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                    <Play className="h-8 w-8 text-primary-foreground ml-1" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">
-                    Building Modern Web Applications
-                  </h3>
-                  <p className="text-muted-foreground">
-                    Learn how to create scalable and performant web applications
-                  </p>
-                </div>
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src="https://www.youtube.com/embed/gk6-lUzqLsw?si=OT3pAzU7zyKHs_TA"
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
               </div>
             </CardContent>
           </Card>
@@ -60,7 +56,7 @@ export default function YouTubeSection() {
           className="text-center mt-8"
         >
           <Button asChild variant="outline" size="lg" className="group">
-            <Link href="https://youtube.com/@vaibhavmaurya" target="_blank">
+            <Link href="https://youtube.com/@thevaibhavmaurya" target="_blank">
               Visit YouTube Channel
               <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
