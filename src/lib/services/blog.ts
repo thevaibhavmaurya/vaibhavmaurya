@@ -18,7 +18,16 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
         const slug = fileName.replace(/\.mdx$/, "");
         const fullPath = path.join(BLOG_DIRECTORY, fileName);
         const fileContents = fs.readFileSync(fullPath, "utf8");
-        const { data, content } = matter(fileContents);
+        const { data, content } = matter(fileContents, {
+          engines: {
+            yaml: {
+              parse: (input: string) => {
+                const yaml = require("js-yaml");
+                return yaml.load(input);
+              },
+            },
+          },
+        });
 
         // For MDX, we'll store the raw content and let MDX handle the rendering
         const readingTime = data.readingTime || estimateReadingTime(content);
@@ -49,7 +58,16 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
     }
 
     const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data, content } = matter(fileContents);
+    const { data, content } = matter(fileContents, {
+      engines: {
+        yaml: {
+          parse: (input: string) => {
+            const yaml = require("js-yaml");
+            return yaml.load(input);
+          },
+        },
+      },
+    });
 
     const readingTime = data.readingTime || estimateReadingTime(content);
 
