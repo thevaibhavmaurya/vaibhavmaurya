@@ -2,6 +2,7 @@ import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { CodeBlock } from "./CodeBlock";
 
 function MDXWrapper({ children }: { children: ReactNode }) {
   return (
@@ -120,31 +121,26 @@ const MdxComponents: MDXComponents = {
     const isInline = !className;
 
     if (isInline) {
-      return (
-        <code
-          className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold text-foreground"
-          {...props}
-        >
-          {children}
-        </code>
-      );
+      return <code {...props}>{children}</code>;
     }
 
     return (
-      <code className={className} {...props}>
+      <CodeBlock isInline={isInline} className={className} {...props}>
         {children}
-      </code>
+      </CodeBlock>
     );
   },
 
-  pre: ({ children, ...props }) => (
-    <pre
-      className="mb-4 mt-6 overflow-x-auto rounded-lg border bg-slate-950 p-4 text-sm text-white"
-      {...props}
-    >
-      {children}
-    </pre>
-  ),
+  pre: ({ children, ...props }) => {
+    return (
+      <pre
+        className="bg-card text-card-foreground rounded-xl overflow-hidden"
+        {...props}
+      >
+        {children}
+      </pre>
+    );
+  },
 
   blockquote: ({ children, ...props }) => (
     <blockquote
@@ -160,7 +156,7 @@ const MdxComponents: MDXComponents = {
 
     return (
       <Image
-        className="rounded-lg shadow-md my-6 w-full h-auto"
+        className="rounded-lg my-6 w-full h-auto"
         alt={alt || ""}
         src={src}
         width={800}

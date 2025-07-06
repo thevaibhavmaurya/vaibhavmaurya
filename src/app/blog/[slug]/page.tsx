@@ -13,6 +13,7 @@ import RelatedPosts from "@/components/organisms/RelatedPosts";
 import { getBlogPost, getAllBlogPosts } from "@/lib/services/blog";
 import { siteConfig } from "@/lib/config/site";
 import AnimatedDiv from "@/components/atoms/AnimatedDiv";
+import ShareButton from "@/components/atoms/ShareButton";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -124,13 +125,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <article className="container py-12">
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
-          <AnimatedDiv animation="slide-up" className="mb-8">
+          <AnimatedDiv
+            animation="slide-up"
+            className="mb-8 flex justify-between items-center"
+          >
             <Button variant="ghost" size="sm" asChild className="group">
               <Link href="/blog">
                 <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
                 Back to Blog
               </Link>
             </Button>
+
+            <ShareButton
+              title={post.title}
+              text={post.excerpt}
+              url={`${siteConfig.url}/blog/${post.slug}`}
+            />
           </AnimatedDiv>
 
           {/* Article Header */}
@@ -208,6 +218,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <Button size="sm" variant="outline" asChild>
                     <Link href="/blog">← More Articles</Link>
                   </Button>
+                  <ShareButton
+                    title={post.title}
+                    text={post.excerpt}
+                    url={`${siteConfig.url}/blog/${post.slug}`}
+                  />
                 </div>
               </div>
             </footer>
