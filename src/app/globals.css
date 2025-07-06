@@ -272,4 +272,12 @@
       @apply bg-gray-100 text-black;
     }
   }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-primary/40 bg-clip-text text-transparent;
+  }
+
+  .floating-card {
+    @apply transform transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1;
+  }
 }

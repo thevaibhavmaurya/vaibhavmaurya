@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { siteConfig } from "@/lib/config/site";
 import { cn } from "@/lib/utils";
+import PageLayout from "@/components/layout/PageLayout";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -149,7 +150,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange={false}
         >
-          {children}
+          <PageLayout>{children}</PageLayout>
         </ThemeProvider>
       </body>
     </html>

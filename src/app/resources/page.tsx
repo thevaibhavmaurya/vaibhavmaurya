@@ -1,8 +1,7 @@
 import { Metadata } from "next";
-import PageLayout from "@/components/layout/PageLayout";
 import ResourcesGrid from "@/components/organisms/ResourcesGrid";
 import { siteConfig } from "@/lib/config/site";
-import AnimatedDiv from "@/components/atoms/AnimatedDiv";
+import PageTitle from "@/components/molecules/PageTitle";
 
 export const metadata: Metadata = {
   title: "Resources",
@@ -18,22 +17,15 @@ export const metadata: Metadata = {
 
 export default function ResourcesPage() {
   return (
-    <PageLayout>
-      <div className="container py-12">
-        <AnimatedDiv animation="slide-up" className="max-w-3xl mb-12">
-          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-            Resources
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            A curated collection of tools, libraries, tutorials, and resources
-            that I find useful for web development and design.
-          </p>
-        </AnimatedDiv>
+    <div className="container py-12">
+      <PageTitle
+        title="Resources"
+        description="A curated collection of tools, libraries, tutorials, and resources that I find useful for web development and design."
+      />
 
-        <div>
-          <ResourcesGrid />
-        </div>
+      <div>
+        <ResourcesGrid />
       </div>
-    </PageLayout>
+    </div>
   );
 }

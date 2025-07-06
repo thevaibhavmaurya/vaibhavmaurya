@@ -69,80 +69,71 @@ const experiences = [
 
 export default function ExperienceSection() {
   return (
-    <section className="py-20 bg-muted/30">
-      <div className="container">
-        <div className="text-center mb-16">
-          <AnimatedTitle
-            title="Work Experience"
-            as="h2"
-            className="text-3xl md:text-4xl font-bold tracking-tight mb-4"
-          />
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            My professional journey in software development and web technologies
-          </p>
-        </div>
+    <section className="container py-20">
+      <div className="text-center mb-16">
+        <AnimatedTitle
+          title="Work Experience"
+          as="h2"
+          className="text-3xl md:text-4xl font-bold tracking-tight mb-4"
+        />
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          My professional journey in software development and web technologies
+        </p>
+      </div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-6">
-            {experiences.map((experience) => (
-              <Card
-                key={experience.id}
-                className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-primary"
-              >
-                <CardContent className="p-6">
-                  <div className="space-y-4">
-                    {/* Header */}
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                      <div className="space-y-2">
-                        <h3 className="text-xl font-semibold text-foreground">
-                          {experience.position}
-                        </h3>
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                          <Building className="h-4 w-4" />
-                          <span className="font-medium text-foreground">
-                            {experience.company}
-                          </span>
-                        </div>
-                      </div>
-                      <Badge variant="outline" className="w-fit">
-                        {experience.type}
-                      </Badge>
-                    </div>
-
-                    {/* Meta info */}
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        <span>{experience.duration}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <MapPin className="h-4 w-4" />
-                        <span>{experience.location}</span>
+      <div className="max-w-4xl mx-auto">
+        <div className="space-y-6">
+          {experiences.map((experience) => (
+            <Card key={experience.id} className="border-l-4 border-l-primary">
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  {/* Header */}
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-semibold text-foreground">
+                        {experience.position}
+                      </h3>
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <Building className="h-4 w-4" />
+                        <span className="font-medium text-foreground">
+                          {experience.company}
+                        </span>
                       </div>
                     </div>
+                    <Badge variant="outline" className="w-fit">
+                      {experience.type}
+                    </Badge>
+                  </div>
 
-                    {/* Description */}
-                    <p className="text-muted-foreground leading-relaxed">
-                      {experience.description}
-                    </p>
-
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-2">
-                      {experience.technologies.map((tech) => (
-                        <Badge
-                          key={tech}
-                          variant="secondary"
-                          className="text-xs"
-                        >
-                          {tech}
-                        </Badge>
-                      ))}
+                  {/* Meta info */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-1">
+                      <Calendar className="h-4 w-4" />
+                      <span>{experience.duration}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <MapPin className="h-4 w-4" />
+                      <span>{experience.location}</span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+
+                  {/* Description */}
+                  <p className="text-muted-foreground leading-relaxed">
+                    {experience.description}
+                  </p>
+
+                  {/* Technologies */}
+                  <div className="flex flex-wrap gap-2">
+                    {experience.technologies.map((tech) => (
+                      <Badge key={tech} variant="secondary" className="text-xs">
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </section>

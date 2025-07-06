@@ -1,9 +1,8 @@
 import { Metadata } from "next";
-import PageLayout from "@/components/layout/PageLayout";
 import BlogGrid from "@/components/organisms/BlogGrid";
 import { getAllBlogPosts } from "@/lib/services/blog";
 import { siteConfig } from "@/lib/config/site";
-import AnimatedDiv from "@/components/atoms/AnimatedDiv";
+import PageTitle from "@/components/molecules/PageTitle";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -21,20 +20,15 @@ export default async function BlogPage() {
   const posts = await getAllBlogPosts();
 
   return (
-    <PageLayout>
+    <>
       <div className="container py-12">
-        <AnimatedDiv animation="slide-up" className="max-w-3xl mb-12">
-          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-            Blog
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            Technical articles, tutorials, and insights about web development
-            and modern software engineering practices.
-          </p>
-        </AnimatedDiv>
+        <PageTitle
+          title="Blog"
+          description="Technical articles, tutorials, and insights about web development and modern software engineering practices."
+        />
 
         <BlogGrid posts={posts} />
       </div>
-    </PageLayout>
+    </>
   );
 }

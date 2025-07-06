@@ -10,7 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { resources } from "@/lib/data/resources";
 import { ResourceCategory } from "@/lib/types/resource";
@@ -46,9 +45,10 @@ export default function ResourcesGrid() {
 
   return (
     <div className="space-y-8">
-      {/* Category Filter */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Filter by Category</h3>
+        <h3 className="text-lg font-semibold gradient-text">
+          Filter by Category
+        </h3>
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => (
             <Button
@@ -56,7 +56,6 @@ export default function ResourcesGrid() {
               variant={selectedCategory === category ? "default" : "outline"}
               size="sm"
               onClick={() => setSelectedCategory(category)}
-              className="capitalize"
             >
               {category === "all"
                 ? "All"
@@ -66,18 +65,18 @@ export default function ResourcesGrid() {
         </div>
       </div>
 
-      {/* Resources Count */}
       <div className="text-sm text-muted-foreground">
         Showing {filteredResources.length} resource
         {filteredResources.length !== 1 ? "s" : ""}
       </div>
 
-      {/* Resources Grid */}
       <div className="space-y-12">
         {filteredResources.map((resource) => (
           <div key={resource.id} className="space-y-6">
             <div className="space-y-2">
-              <h2 className="text-2xl font-bold">{resource.title}</h2>
+              <h2 className="text-2xl font-bold gradient-text">
+                {resource.title}
+              </h2>
               <p className="text-muted-foreground">{resource.description}</p>
             </div>
 
@@ -85,27 +84,24 @@ export default function ResourcesGrid() {
               {resource.items.map((item, index) => (
                 <Card
                   key={index}
-                  className="group hover:shadow-lg transition-shadow"
+                  className="group h-full floating-card  bg-card/50"
                 >
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
-                      <div className="space-y-1">
-                        <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                      <div className="space-y-2">
+                        <CardTitle className="text-lg gradient-text group-hover:text-primary transition-colors">
                           {item.name}
                         </CardTitle>
                         <div className="flex items-center gap-2">
                           {item.free && (
-                            <Badge
-                              variant="secondary"
-                              className="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-                            >
+                            <div className="px-2 py-1 text-xs rounded-full border-0 text-green-600 dark:text-green-400">
                               Free
-                            </Badge>
+                            </div>
                           )}
                           {item.rating && (
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-1 px-2 py-1 rounded-full border-0">
                               <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                              <span className="text-xs text-muted-foreground">
+                              <span className="text-xs text-foreground/80">
                                 {item.rating}/5
                               </span>
                             </div>
@@ -115,26 +111,34 @@ export default function ResourcesGrid() {
                     </div>
                   </CardHeader>
 
-                  <CardContent className="space-y-4">
-                    <CardDescription className="line-clamp-3">
+                  <CardContent className="space-y-4 flex-1 flex flex-col">
+                    <CardDescription className="line-clamp-3 flex-1">
                       {item.description}
                     </CardDescription>
 
                     {item.tags && item.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1">
-                        {item.tags.map((tag) => (
-                          <Badge
+                      <div className="flex flex-wrap gap-2">
+                        {item.tags.slice(0, 3).map((tag) => (
+                          <div
                             key={tag}
-                            variant="outline"
-                            className="text-xs"
+                            className="px-2 py-1 text-xs rounded-full border-0 text-foreground/80"
                           >
                             {tag}
-                          </Badge>
+                          </div>
                         ))}
+                        {item.tags.length > 3 && (
+                          <div className="px-2 py-1 text-xs rounded-full border-0 text-muted-foreground">
+                            +{item.tags.length - 3}
+                          </div>
+                        )}
                       </div>
                     )}
 
-                    <Button asChild className="w-full" size="sm">
+                    <Button
+                      asChild
+                      className="w-full border-0 hover:bg-primary/20"
+                      size="sm"
+                    >
                       <Link
                         href={item.url}
                         target="_blank"
@@ -152,7 +156,6 @@ export default function ResourcesGrid() {
         ))}
       </div>
 
-      {/* No Results */}
       {filteredResources.length === 0 && (
         <div className="text-center py-12">
           <p className="text-muted-foreground">

@@ -7,7 +7,6 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import PageLayout from "@/components/layout/PageLayout";
 import MdxComponents from "@/components/mdx/MdxComponents";
 import RelatedPosts from "@/components/organisms/RelatedPosts";
 import { getBlogPost, getAllBlogPosts } from "@/lib/services/blog";
@@ -83,7 +82,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     day: "numeric",
   });
 
-  // Structured data for blog post
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -115,7 +113,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   };
 
   return (
-    <PageLayout>
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -124,7 +122,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       />
       <article className="container py-12">
         <div className="max-w-4xl mx-auto">
-          {/* Back Button */}
           <AnimatedDiv
             animation="slide-up"
             className="mb-8 flex justify-between items-center"
@@ -143,7 +140,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             />
           </AnimatedDiv>
 
-          {/* Article Header */}
           <AnimatedDiv animation="slide-up" delay={0.1}>
             <div className="relative aspect-[50/21] overflow-hidden rounded-lg bg-muted shadow-lg mb-12">
               <Image
@@ -194,12 +190,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </header>
           </AnimatedDiv>
 
-          {/* Article Content - MDX */}
           <div className="mdx-content">
             <MDXRemote source={post.content} components={MdxComponents} />
           </div>
 
-          {/* Article Footer */}
           <AnimatedDiv animation="fade-in" className="mt-16">
             <footer className="space-y-8">
               <Separator />
@@ -228,7 +222,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </footer>
           </AnimatedDiv>
 
-          {/* Related Posts */}
           {relatedPosts.length > 0 && (
             <AnimatedDiv animation="slide-up" className="mt-16">
               <RelatedPosts posts={relatedPosts} />
@@ -236,6 +229,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           )}
         </div>
       </article>
-    </PageLayout>
+    </>
   );
 }

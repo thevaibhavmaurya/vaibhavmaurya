@@ -29,12 +29,11 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
           },
         });
 
-        // For MDX, we'll store the raw content and let MDX handle the rendering
         const readingTime = data.readingTime || estimateReadingTime(content);
 
         return {
           slug,
-          content, // Raw MDX content
+          content,
           ...data,
           readingTime,
         } as BlogPost;
@@ -73,7 +72,7 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
 
     return {
       slug,
-      content, // Raw MDX content
+      content,
       ...data,
       readingTime,
     } as BlogPost;
@@ -134,9 +133,8 @@ export async function searchPosts(query: string): Promise<BlogPost[]> {
   );
 }
 
-// Helper function to estimate reading time
 function estimateReadingTime(content: string): number {
-  const wordsPerMinute = 200;
+  const wordsPerMinute = 250;
   const words = content.trim().split(/\s+/).length;
   const minutes = words / wordsPerMinute;
   return Math.ceil(minutes);

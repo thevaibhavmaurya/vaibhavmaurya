@@ -1,9 +1,8 @@
 import { Metadata } from "next";
-import PageLayout from "@/components/layout/PageLayout";
 import ProjectsGrid from "@/components/organisms/ProjectsGrid";
 import { projects } from "@/lib/data/projects";
 import { siteConfig } from "@/lib/config/site";
-import AnimatedDiv from "@/components/atoms/AnimatedDiv";
+import PageTitle from "@/components/molecules/PageTitle";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -27,22 +26,15 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <PageLayout>
-      <div className="container py-12">
-        <AnimatedDiv animation="slide-up" className="max-w-3xl mb-12">
-          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-            Projects
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            A collection of my work showcasing web development projects, from
-            frontend interfaces to full-stack applications.
-          </p>
-        </AnimatedDiv>
+    <div className="container py-12">
+      <PageTitle
+        title="Projects"
+        description="A collection of my work showcasing web development projects, from frontend interfaces to full-stack applications."
+      />
 
-        <div>
-          <ProjectsGrid projects={projects} />
-        </div>
+      <div>
+        <ProjectsGrid projects={projects} />
       </div>
-    </PageLayout>
+    </div>
   );
 }
