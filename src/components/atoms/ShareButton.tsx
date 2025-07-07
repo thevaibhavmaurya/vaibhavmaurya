@@ -49,6 +49,7 @@ export default function ShareButton({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
+      console.log("Error copying to clipboard:", error);
       fallbackCopyToClipboard(url);
     }
   };

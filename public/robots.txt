@@ -1,12 +1,31 @@
 User-agent: *
 Allow: /
 
-# Disallow admin and private areas
+# Disallow admin and private areas (none exist but good practice)
 Disallow: /admin/
 Disallow: /private/
+Disallow: /_next/
+Disallow: /api/
 
-# Allow all crawlers to access sitemap
-Sitemap: https://vaibhavmaurya.dev/sitemap.xml
+# Allow all important pages
+Allow: /
+Allow: /blog
+Allow: /projects
+Allow: /resources
+Allow: /sitemap.xml
 
-# Crawl delay (optional, can help with server load)
+# Sitemap location
+Sitemap: https://vaibhavmaurya.com/sitemap.xml
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
+
+# Google specific directives
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing specific directives
+User-agent: Bingbot
+Allow: /
 Crawl-delay: 1 

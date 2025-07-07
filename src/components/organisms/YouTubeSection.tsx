@@ -1,22 +1,17 @@
-"use client";
-
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import AnimatedDiv from "@/components/atoms/AnimatedDiv";
+import { SectionTitleDescription } from "../molecules/AnimatedTitleDescription";
 
 export default function YouTubeSection() {
   return (
     <section className="container py-20">
-      <AnimatedDiv animation="slide-up" className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-          Latest Video
-        </h2>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Watch my latest tutorials and insights on web development
-        </p>
-      </AnimatedDiv>
+      <SectionTitleDescription
+        title="Latest Video"
+        description="Watch my latest tutorials and insights on web development"
+      />
 
       <div className="max-w-4xl mx-auto">
         <Card className="overflow-hidden border-0 shadow-lg py-0">

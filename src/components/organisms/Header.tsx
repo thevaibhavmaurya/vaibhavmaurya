@@ -4,6 +4,7 @@ import MobileNav from "@/components/molecules/MobileNav";
 import ThemeToggle from "@/components/atoms/ThemeToggle";
 import { cn } from "@/lib/utils";
 import SubtleGradientLine from "../atoms/SubtleGradientLine";
+import Link from "next/link";
 
 interface HeaderProps {
   className?: string;
@@ -20,7 +21,9 @@ export default function Header({ className }: HeaderProps) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
-            <Logo />
+            <Link href="/">
+              <Logo />
+            </Link>
           </div>
 
           <div className="flex items-center space-x-6">

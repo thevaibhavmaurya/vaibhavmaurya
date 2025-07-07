@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import CodeCopyButton from "../atoms/CodeCopyButton";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { extractCodeContent } from "@/lib/services/extract-code-content";
 
 export function CodeBlock({

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Heart, Mail, MapPin, Phone, Briefcase, Sparkles } from "lucide-react";
+import { Mail, MapPin, Phone, Briefcase, Sparkles } from "lucide-react";
 import {
   Home,
   User,

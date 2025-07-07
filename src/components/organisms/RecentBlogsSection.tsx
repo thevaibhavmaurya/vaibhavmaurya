@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BlogCard from "@/components/molecules/BlogCard";
 import { BlogPost } from "@/lib/types/blog";
-import AnimatedTitle from "@/components/atoms/AnimatedTitle";
+import { SectionTitleDescription } from "../molecules/AnimatedTitleDescription";
 
 interface RecentBlogsSectionProps {
   posts?: BlogPost[];
@@ -16,16 +16,10 @@ export default function RecentBlogsSection({
 
   return (
     <section className="container py-20">
-      <div className="text-center mb-16">
-        <AnimatedTitle
-          title="Latest Articles"
-          as="h2"
-          className="text-3xl md:text-4xl font-bold tracking-tight mb-4"
-        />
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Insights, tutorials, and thoughts on web development and technology
-        </p>
-      </div>
+      <SectionTitleDescription
+        title="Latest Articles"
+        description="Insights, tutorials, and thoughts on web development and technology"
+      />
 
       {recentPosts.length > 0 ? (
         <>

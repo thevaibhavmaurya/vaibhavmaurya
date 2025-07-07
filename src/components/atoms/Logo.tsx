@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 interface LogoProps {
@@ -7,14 +6,13 @@ interface LogoProps {
 
 export default function Logo({ className }: LogoProps) {
   return (
-    <Link
-      href="/"
+    <h1
       className={cn(
-        "text-lg font-semibold text-foreground hover:text-foreground/80 transition-colors",
+        "text-2xl font-jost font-semibold gradient-text",
         className
       )}
     >
-      Vaibhav Maurya
-    </Link>
+      Vabihav Maurya.
+    </h1>
   );
 }

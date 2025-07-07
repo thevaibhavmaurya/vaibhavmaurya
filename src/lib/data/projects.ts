@@ -6,11 +6,10 @@ export const projects: Project[] = [
     title: "Modtopia",
     description:
       "Modtopia is a fullstack e-commerce app for browsing and buying GTA 5 mods, built with Next.js, Tailwind CSS, shadcn, and MongoDB.",
-    image:
-      "https://vaibhavmaurya.vercel.app/_next/image?url=%2Fassets%2Fmodtopia.png&w=3840&q=75",
+    image: "/images/projects/modtopia.webp",
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "shadcn", "MongoDB"],
     liveUrl: "https://modtopia.vercel.app/",
-    githubUrl: "https://github.com/vaibhav-xp/rexteria",
+    githubUrl: "https://github.com/thevaibhavmaurya/rexteria",
     youtubeUrl: "https://youtu.be/xopUB6D-jEc?si=xAVheUl2oWIkDSwM",
     featured: true,
     category: "fullstack",
@@ -22,8 +21,7 @@ export const projects: Project[] = [
     title: "Ceawaup",
     description:
       "Ceawaup provides sustainable engineering solutions to rural areas, improving infrastructure, clean water, energy, and economic growth through innovative projects.",
-    image:
-      "https://vaibhavmaurya.vercel.app/_next/image?url=%2Fassets%2Fceawaup.png&w=3840&q=75",
+    image: "/images/projects/ceawaup.webp",
     tags: ["React", "TypeScript", "Tailwind CSS", "Sustainable Engineering"],
     liveUrl: "https://ceawaup.com/",
     featured: true,
@@ -36,13 +34,12 @@ export const projects: Project[] = [
     title: "Crypto Vault",
     description:
       "Crypto Vault securely manages and encrypts your digital assets, ensuring easy access and protection for your cryptocurrencies.",
-    image:
-      "https://vaibhavmaurya.vercel.app/_next/image?url=%2Fassets%2Fcrypto-vault.png&w=3840&q=75",
+    image: "/images/projects/crypto-vault.webp",
     tags: ["React", "Node.js", "Encryption", "Cryptocurrency", "Security"],
     liveUrl: "https://crypto-vault-one.vercel.app/welcome",
-    githubUrl: "https://github.com/vaibhav-xp/CryptoVault",
+    githubUrl: "https://github.com/thevaibhavmaurya/CryptoVault",
     youtubeUrl: "https://www.youtube.com/watch?v=hmPLyYaOOas&t=86s",
-    featured: true,
+    featured: false,
     category: "fullstack",
     year: 2024,
     status: "completed",
@@ -52,13 +49,26 @@ export const projects: Project[] = [
     title: "Zyprolix Player",
     description:
       "A modern media player application with advanced features for audio and video playback, built with modern web technologies.",
-    image:
-      "https://vaibhavmaurya.vercel.app/_next/image?url=%2Fassets%2Fzyprolix-player.png&w=3840&q=75",
+    image: "/images/projects/zyprolix-player.webp",
     tags: ["React", "TypeScript", "Media Player", "Web Audio API"],
     liveUrl: "https://zyprolix-player.vercel.app/",
-    githubUrl: "https://github.com/vaibhav-xp/Zyprolix-Player",
+    githubUrl: "https://github.com/thevaibhavmaurya/Zyprolix-Player",
     featured: false,
     category: "fullstack",
+    year: 2024,
+    status: "completed",
+  },
+  {
+    id: "animation-p5js",
+    title: "Physics Concepts Animations",
+    description:
+      "Developed animations using P5.js to illustrate physics concepts such as restitution, friction, and gravity. This was a freelance project for a client creating an educational physics website.",
+    image: "/images/projects/animation-p5js.webp",
+    tags: ["p5.js", "Physics", "JavaScript"],
+    liveUrl: "https://restitution.onrender.com/",
+    githubUrl: "https://github.com/thevaibhavmaurya/Animation-P5js",
+    featured: true,
+    category: "freelance",
     year: 2024,
     status: "completed",
   },

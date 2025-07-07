@@ -1,14 +1,16 @@
 "use client";
 
-import { HTMLAttributes, forwardRef, useEffect, useRef, useState } from "react";
+import { HTMLAttributes, forwardRef, useEffect, useState } from "react";
+import { motion, HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-interface AnimatedDivProps extends HTMLAttributes<HTMLDivElement> {
+interface AnimatedDivProps extends Omit<HTMLMotionProps<"div">, "children"> {
   animation?: "fade-in" | "slide-up" | "slide-left" | "slide-right" | "none";
   delay?: number;
   duration?: number;
   triggerOnce?: boolean;
   threshold?: number;
+  children?: React.ReactNode;
 }
 
 const AnimatedDiv = forwardRef<HTMLDivElement, AnimatedDivProps>(
@@ -25,83 +27,86 @@ const AnimatedDiv = forwardRef<HTMLDivElement, AnimatedDivProps>(
     },
     ref
   ) => {
-    const [isVisible, setIsVisible] = useState(false);
-    const [hasTriggered, setHasTriggered] = useState(false);
-    const elementRef = useRef<HTMLDivElement>(null);
+    const [shouldAnimate, setShouldAnimate] = useState(false);
 
     useEffect(() => {
-      const element = elementRef.current;
-      if (!element || animation === "none") return;
+      const timer = setTimeout(() => {
+        setShouldAnimate(true);
+      }, 100);
 
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && (!triggerOnce || !hasTriggered)) {
-            setTimeout(() => {
-              setIsVisible(true);
-              if (triggerOnce) setHasTriggered(true);
-            }, delay * 1000);
-          } else if (!triggerOnce && !entry.isIntersecting) {
-            setIsVisible(false);
-          }
-        },
-        {
-          threshold,
-          rootMargin: "0px 0px -50px 0px",
-        }
-      );
+      return () => clearTimeout(timer);
+    }, []);
 
-      observer.observe(element);
-      return () => observer.disconnect();
-    }, [delay, triggerOnce, hasTriggered, threshold, animation]);
-
-    const getAnimationClasses = () => {
-      if (animation === "none") return "";
-
-      const baseClasses = "transition-all ease-out";
-      const durationClass = `duration-[${Math.floor(duration * 1000)}ms]`;
-
+    const getAnimationVariants = () => {
       switch (animation) {
         case "fade-in":
-          return cn(
-            baseClasses,
-            durationClass,
-            isVisible ? "opacity-100" : "opacity-0"
-          );
+          return {
+            hidden: { opacity: 0 },
+            visible: { opacity: 1 },
+          };
         case "slide-up":
-          return cn(
-            baseClasses,
-            durationClass,
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          );
+          return {
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0 },
+          };
         case "slide-left":
-          return cn(
-            baseClasses,
-            durationClass,
-            isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
-          );
+          return {
+            hidden: { opacity: 0, x: 20 },
+            visible: { opacity: 1, x: 0 },
+          };
         case "slide-right":
-          return cn(
-            baseClasses,
-            durationClass,
-            isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
-          );
+          return {
+            hidden: { opacity: 0, x: -20 },
+            visible: { opacity: 1, x: 0 },
+          };
+        case "none":
+          return {
+            hidden: {},
+            visible: {},
+          };
         default:
-          return baseClasses;
+          return {
+            hidden: { opacity: 0 },
+            visible: { opacity: 1 },
+          };
       }
     };
 
+    const variants = getAnimationVariants();
+
+    if (animation === "none") {
+      return (
+        <div
+          ref={ref}
+          className={className}
+          {...(props as HTMLAttributes<HTMLDivElement>)}
+        >
+          {children}
+        </div>
+      );
+    }
+
     return (
-      <div
-        ref={(node) => {
-          elementRef.current = node;
-          if (typeof ref === "function") ref(node);
-          else if (ref) ref.current = node;
+      <motion.div
+        ref={ref}
+        initial="hidden"
+        animate={shouldAnimate ? "visible" : "hidden"}
+        whileInView="visible"
+        viewport={{
+          once: triggerOnce,
+          amount: threshold,
         }}
-        className={cn(getAnimationClasses(), className)}
+        transition={{
+          duration,
+          delay,
+          ease: "easeOut",
+        }}
+        variants={variants}
+        className={cn(className)}
         {...props}
       >
         {children}
-      </div>
+      </motion.div>
     );
   }
 );

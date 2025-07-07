@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { resources } from "@/lib/data/resources";
 import { ResourceCategory } from "@/lib/types/resource";
+import { SectionTitleDescription } from "../molecules/AnimatedTitleDescription";
 
 const categoryNames: Record<ResourceCategory, string> = {
   tools: "Development Tools",
@@ -73,12 +74,11 @@ export default function ResourcesGrid() {
       <div className="space-y-12">
         {filteredResources.map((resource) => (
           <div key={resource.id} className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-2xl font-bold gradient-text">
-                {resource.title}
-              </h2>
-              <p className="text-muted-foreground">{resource.description}</p>
-            </div>
+            <SectionTitleDescription
+              title={resource.title}
+              description={resource.description}
+              containerClassName="text-start mx-0"
+            />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {resource.items.map((item, index) => (

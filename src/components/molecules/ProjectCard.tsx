@@ -4,7 +4,6 @@ import {
   Github,
   Youtube,
   Calendar,
-  Star,
   Sparkles,
 } from "lucide-react";
 import { CardDescription, CardTitle } from "@/components/ui/card";
@@ -32,10 +31,10 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
         role="article"
         aria-label={`Project: ${project.title}`}
       >
-        {/* Dark overlay for better contrast */}
+        {/* Dark overlay */}
         <div className="absolute w-full h-full top-0 left-0 transition duration-300 group-hover/card:bg-black/80 bg-black/60"></div>
 
-        {/* Header with category and featured status */}
+        {/* Header */}
         <div className="flex flex-row items-start justify-between z-10 gap-2">
           <div className="flex flex-col gap-2">
             {project.featured && (
@@ -65,7 +64,7 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
             </Badge>
           </div>
 
-          {/* Optional: Add a subtle glow effect */}
+          {/* Subtle glow effect */}
           <div className="absolute -top-2 -right-2 w-20 h-20 bg-primary/20 rounded-full blur-xl opacity-50 group-hover/card:opacity-70 transition-opacity duration-300"></div>
         </div>
 
@@ -110,7 +109,7 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
             )}
           </div>
 
-          {/* Footer with year and actions */}
+          {/* Footer */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-gray-200 text-sm">
               <Calendar className="h-4 w-4" />

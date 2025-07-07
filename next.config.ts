@@ -8,12 +8,23 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "www.vaibhavmaurya.com",
+          },
+        ],
+        destination: "https://vaibhavmaurya.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "vaibhavmaurya.vercel.app",
-      },
       {
         protocol: "https",
         hostname: "dev-to-uploads.s3.amazonaws.com",
@@ -21,6 +32,14 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "media2.dev.to",
+      },
+      {
+        protocol: "https",
+        hostname: "vaibhavmaurya.com",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
       },
     ],
   },

@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { BlogPost } from "../types/blog";
+import yaml from "js-yaml";
 
 const BLOG_DIRECTORY = path.join(process.cwd(), "src/content/blog");
 
@@ -22,8 +23,7 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
           engines: {
             yaml: {
               parse: (input: string) => {
-                const yaml = require("js-yaml");
-                return yaml.load(input);
+                return yaml.load(input) as object;
               },
             },
           },
@@ -61,8 +61,7 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
       engines: {
         yaml: {
           parse: (input: string) => {
-            const yaml = require("js-yaml");
-            return yaml.load(input);
+            return yaml.load(input) as object;
           },
         },
       },

@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProjectCard from "@/components/molecules/ProjectCard";
 import { projects } from "@/lib/data/projects";
-import AnimatedTitle from "@/components/atoms/AnimatedTitle";
+import { SectionTitleDescription } from "../molecules/AnimatedTitleDescription";
 
 export default function FeaturedProjectsSection() {
   const featuredProjects = projects
@@ -12,16 +12,10 @@ export default function FeaturedProjectsSection() {
 
   return (
     <section className="container py-20">
-      <div className="text-center mb-16">
-        <AnimatedTitle
-          title="Featured Projects"
-          as="h2"
-          className="text-3xl md:text-4xl font-bold tracking-tight mb-4"
-        />
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          A showcase of my best work in web development and software engineering
-        </p>
-      </div>
+      <SectionTitleDescription
+        title="Featured Projects"
+        description="A showcase of my best work in web development and software engineering"
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
         {featuredProjects.map((project) => (

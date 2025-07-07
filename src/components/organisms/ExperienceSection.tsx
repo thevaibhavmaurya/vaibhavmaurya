@@ -1,7 +1,7 @@
 import { Building, Calendar, MapPin } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import AnimatedTitle from "@/components/atoms/AnimatedTitle";
+import { SectionTitleDescription } from "../molecules/AnimatedTitleDescription";
 
 const experiences = [
   {
@@ -70,16 +70,10 @@ const experiences = [
 export default function ExperienceSection() {
   return (
     <section className="container py-20">
-      <div className="text-center mb-16">
-        <AnimatedTitle
-          title="Work Experience"
-          as="h2"
-          className="text-3xl md:text-4xl font-bold tracking-tight mb-4"
-        />
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          My professional journey in software development and web technologies
-        </p>
-      </div>
+      <SectionTitleDescription
+        title="Work Experience"
+        description="My professional journey in software development and web technologies"
+      />
 
       <div className="max-w-4xl mx-auto">
         <div className="space-y-6">

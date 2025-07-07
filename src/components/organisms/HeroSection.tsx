@@ -15,7 +15,7 @@ export default function HeroSection() {
           <div className="relative">
             <div className="relative aspect-square w-80 lg:w-[450px] rounded-2xl overflow-hidden bg-muted border-4 border-background shadow-2xl transform transition-all duration-500 hover:-rotate-3 hover:scale-105 hover:shadow-3xl hover:shadow-primary/20">
               <Image
-                src="/images/profile.jpg"
+                src="/images/profile.webp"
                 alt={siteConfig.author.name}
                 fill
                 className="object-cover transition-all duration-500 hover:brightness-110 hover:contrast-110"
@@ -32,15 +32,29 @@ export default function HeroSection() {
           <AnimatedDiv animation="slide-up" delay={0.1}>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight transition-all duration-300 hover:scale-105 hover:tracking-wide cursor-default">
               Hi, I&apos;m{" "}
-              <span className="gradient-text transition-all duration-300 hover:text-shadow-lg hover:scale-110 inline-block hover:rotate-1">
+              <span className="gradient-text transition-all duration-300 hover:text-shadow-lg hover:scale-110 inline-block hover:rotate-1 font-jost">
                 {siteConfig.author.name}
               </span>
             </h1>
           </AnimatedDiv>
 
           <AnimatedDiv animation="slide-up" delay={0.3}>
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl transition-all duration-300 hover:text-foreground hover:scale-105 cursor-default">
-              {siteConfig.description}
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl transition-all duration-300 hover:scale-105 cursor-default">
+              I&apos;m all about diving into new technologies and crafting SaaS
+              products that make a difference. I enjoy learning out loud,
+              sharing my journey, and contributing to open-source projects. Join
+              me on{" "}
+              <a
+                href={siteConfig.links.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary relative before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-px before:bg-primary"
+              >
+                Twitter
+              </a>{" "}
+              to follow my tech adventures, connect with fellow enthusiasts, and
+              be part of the conversation. Let&apos;s innovate and grow
+              together!
             </p>
           </AnimatedDiv>
         </div>

@@ -8,6 +8,7 @@ export interface SiteConfig {
     email: string;
     phone?: string;
     location?: string;
+    twitterUsername?: string;
     twitter?: string;
     github?: string;
     linkedin?: string;

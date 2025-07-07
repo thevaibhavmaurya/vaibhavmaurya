@@ -8,11 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import MdxComponents from "@/components/mdx/MdxComponents";
-import RelatedPosts from "@/components/organisms/RelatedPosts";
 import { getBlogPost, getAllBlogPosts } from "@/lib/services/blog";
 import { siteConfig } from "@/lib/config/site";
 import AnimatedDiv from "@/components/atoms/AnimatedDiv";
 import ShareButton from "@/components/atoms/ShareButton";
+import convertRelativeUrlToFull from "@/lib/services/convert-relative-url-to-full";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -37,6 +37,8 @@ export async function generateMetadata({
     };
   }
 
+  const image = convertRelativeUrlToFull(post.image);
+
   return {
     title: post.seo.title,
     description: post.seo.description,
@@ -50,13 +52,14 @@ export async function generateMetadata({
       authors: [post.author],
       tags: post.tags,
       url: `${siteConfig.url}/blog/${post.slug}`,
-      images: post.image ? [post.image] : [`/images/blog/${post.slug}.jpg`],
+      images: [image],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.excerpt,
       creator: `@${siteConfig.author.twitter?.split("/").pop()}`,
+      images: [image],
     },
   };
 }
@@ -68,12 +71,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   if (!post) {
     notFound();
   }
-
-  const allPosts = await getAllBlogPosts();
-  const relatedPosts = allPosts
-    .filter((p) => p.slug !== post.slug)
-    .filter((p) => p.tags.some((tag) => post.tags.includes(tag)))
-    .slice(0, 3);
 
   const publishedDate = new Date(post.publishedAt);
   const formattedDate = publishedDate.toLocaleDateString("en-US", {
@@ -143,7 +140,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <AnimatedDiv animation="slide-up" delay={0.1}>
             <div className="relative aspect-[50/21] overflow-hidden rounded-lg bg-muted shadow-lg mb-12">
               <Image
-                src={post.image || ""}
+                src={post.image}
                 alt={post.title}
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -153,7 +150,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
             <header className="mb-12 space-y-6">
               <div className="space-y-6">
-                <h1 className="text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+                <h1 className="text-4xl font-jost lg:text-5xl font-bold tracking-tight leading-tight">
                   {post.title}
                 </h1>
 
@@ -194,39 +191,31 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <MDXRemote source={post.content} components={MdxComponents} />
           </div>
 
-          <AnimatedDiv animation="fade-in" className="mt-16">
-            <footer className="space-y-8">
-              <Separator />
+          <footer className="space-y-8">
+            <Separator />
 
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div className="space-y-1">
-                  <p className="text-sm text-muted-foreground">
-                    Published on {formattedDate}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {post.readingTime} minute read
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Button size="sm" variant="outline" asChild>
-                    <Link href="/blog">← More Articles</Link>
-                  </Button>
-                  <ShareButton
-                    title={post.title}
-                    text={post.excerpt}
-                    url={`${siteConfig.url}/blog/${post.slug}`}
-                  />
-                </div>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground">
+                  Published on {formattedDate}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {post.readingTime} minute read
+                </p>
               </div>
-            </footer>
-          </AnimatedDiv>
 
-          {relatedPosts.length > 0 && (
-            <AnimatedDiv animation="slide-up" className="mt-16">
-              <RelatedPosts posts={relatedPosts} />
-            </AnimatedDiv>
-          )}
+              <div className="flex items-center gap-2">
+                <Button size="sm" variant="outline" asChild>
+                  <Link href="/blog">← More Articles</Link>
+                </Button>
+                <ShareButton
+                  title={post.title}
+                  text={post.excerpt}
+                  url={`${siteConfig.url}/blog/${post.slug}`}
+                />
+              </div>
+            </div>
+          </footer>
         </div>
       </article>
     </>

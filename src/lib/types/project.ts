@@ -20,7 +20,8 @@ export type ProjectCategory =
   | "backend"
   | "mobile"
   | "design"
-  | "other";
+  | "freelance"
+  | "open-source";
 
 export type ProjectStatus = "completed" | "in-progress" | "archived";
 

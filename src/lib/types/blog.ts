@@ -8,7 +8,7 @@ export interface BlogPost {
   featured: boolean;
   author: string;
   readingTime: number;
-  image?: string;
+  image: string;
   seo: {
     title: string;
     description: string;
@@ -24,7 +24,7 @@ export interface BlogFrontmatter {
   featured: boolean;
   author: string;
   readingTime: number;
-  image?: string;
+  image: string;
   seo: {
     title: string;
     description: string;

@@ -1,0 +1,39 @@
+{
+  "name": "Vaibhav Maurya - Full Stack Developer",
+  "short_name": "Vaibhav Maurya",
+  "description": "Full-stack developer specializing in React, Next.js, and modern web technologies. Building scalable applications and sharing knowledge through technical articles.",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icons/vm-logo-light.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/vm-logo-dark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/vm-logo-adaptive.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "categories": ["developer", "portfolio", "blog", "technology"],
+  "lang": "en-US",
+  "dir": "ltr"
+}

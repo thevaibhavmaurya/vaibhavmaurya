@@ -54,18 +54,6 @@ export default function MobileNav({ className }: MobileNavProps) {
         )}
       </Button>
 
-      {/* Backdrop */}
-      <div
-        className={cn(
-          "fixed inset-0 top-16 z-40 transition-all duration-300",
-          isOpen
-            ? "opacity-100 visible backdrop-blur-md bg-black/20"
-            : "opacity-0 invisible backdrop-blur-none"
-        )}
-        onClick={() => setIsOpen(false)}
-      />
-
-      {/* Mobile Navigation Panel */}
       <div
         className={cn(
           "fixed left-0 w-full top-16 z-50 transition-all bg-card duration-500 ease-out",
@@ -109,13 +97,11 @@ export default function MobileNav({ className }: MobileNavProps) {
                         <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
                       )}
                     </span>
-                    {/* Hover effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </Link>
                 ))}
               </div>
 
-              {/* Social Links Section */}
               <div
                 className={cn(
                   "mt-8 pt-8 border-t border-white/10 dark:border-white/5 space-y-6",
