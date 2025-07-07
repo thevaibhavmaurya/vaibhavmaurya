@@ -8,21 +8,21 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 
 const nextConfig: NextConfig = {
-  async redirects() {
-    return [
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "host",
-            value: "www.vaibhavmaurya.com",
-          },
-        ],
-        destination: "https://vaibhavmaurya.com/:path*",
-        permanent: true,
-      },
-    ];
-  },
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: "/:path*",
+  //       has: [
+  //         {
+  //           type: "host",
+  //           value: "www.vaibhavmaurya.com",
+  //         },
+  //       ],
+  //       destination: "https://vaibhavmaurya.com/:path*",
+  //       permanent: true,
+  //     },
+  //   ];
+  // },
   images: {
     remotePatterns: [
       {
