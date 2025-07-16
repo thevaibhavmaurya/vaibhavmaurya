@@ -28,7 +28,7 @@ When you're posting 5-6 posts per day on multiple accounts, you obviously can't 
 
 - [What you'll need](#what-youll-need)
 - [Why n8n?](#why-n8n)
-- [First Workflow - Monitoring File Uploads](#first-workflow---monitoring-file-uploads)
+- [First Workflow - Monitoring File Uploads](/#first-workflow---monitoring-file-uploads)
 - [Second Workflow - Active Posting](#second-workflow---active-posting)
 - [Done!](#done)
 
@@ -36,7 +36,9 @@ I built this automation system for posting across multiple Instagram accounts. T
 
 Here's how it works: Users upload video files to a specific Google Drive folder. The first n8n workflow continuously monitors this folder and updates a spreadsheet record. The second workflow handles the actual posting at scheduled intervals.
 
+<div id='what-youll-need'>
 ## What you'll need
+</div>
 
 - Google Drive folder for video uploads
 - Connected Google Sheets for record keeping
@@ -44,13 +46,17 @@ Here's how it works: Users upload video files to a specific Google Drive folder.
 - Instagram Post API access
 - Server or domain to host your n8n instance
 
+<div id='why-n8n'>
 ## Why n8n?
+</div>
 
 n8n is perfect for small workflows, though you can definitely build complex ones too. It's easy to use and developer-friendly. Similar to Zapier but better in my opinion. The main reason I chose it was that we already had an n8n server running with some existing workflows.
 
 > **Problem**: How do we get descriptions for the posts?
 
+<div id='first-workflow---monitoring-file-uploads'>
 ## First Workflow - Monitoring File Uploads
+</div>
 
 ![First Workflow](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rtv9691blkudp7arlzg6.png)
 
@@ -128,7 +134,9 @@ Add the Google Sheets node, use the same credentials, choose "append row" operat
 
 That's it for the first workflow. Now let's implement the second workflow.
 
+<div id='second-workflow---active-posting'>
 ## Second Workflow - Active Posting
+</div>
 
 ![Second workflow](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ytkkvzarpijim4bfz7uq.png)
 
@@ -298,7 +306,9 @@ return {
 
 ![Update row](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/zbd58a02mhbwzqp4jozq.png)
 
+<div id='done'>
 ## Done!
+</div>
 
 I know it's a bit tricky if you don't know about n8n, but it's easy once you get started. This will definitely save you time. Whenever you're done with video creation, just upload it to Google Drive. No need to worry about the posting process. You can even customize it if you want posts to go live at specific times every day.
 

@@ -1,4 +1,3 @@
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,10 +11,9 @@ import { getBlogPost, getAllBlogPosts } from "@/lib/services/blog";
 import { siteConfig } from "@/lib/config/site";
 import AnimatedDiv from "@/components/atoms/AnimatedDiv";
 import ShareButton from "@/components/atoms/ShareButton";
-import convertRelativeUrlToFull from "@/lib/services/convert-relative-url-to-full";
 
 interface BlogPostPageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
 export async function generateStaticParams() {
@@ -23,45 +21,6 @@ export async function generateStaticParams() {
   return posts.map((post) => ({
     slug: post.slug,
   }));
-}
-
-export async function generateMetadata({
-  params,
-}: BlogPostPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const post = await getBlogPost(slug);
-
-  if (!post) {
-    return {
-      title: "Post Not Found",
-    };
-  }
-
-  const image = convertRelativeUrlToFull(post.image);
-
-  return {
-    title: post.seo.title,
-    description: post.seo.description,
-    keywords: post.seo.keywords,
-    authors: [{ name: post.author }],
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      type: "article",
-      publishedTime: post.publishedAt,
-      authors: [post.author],
-      tags: post.tags,
-      url: `${siteConfig.url}/blog/${post.slug}`,
-      images: [image],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.excerpt,
-      creator: `@${siteConfig.author.twitter?.split("/").pop()}`,
-      images: [image],
-    },
-  };
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
@@ -79,44 +38,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     day: "numeric",
   });
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: post.excerpt,
-    image: post.image || `${siteConfig.url}/images/blog/${post.slug}.jpg`,
-    datePublished: post.publishedAt,
-    dateModified: post.publishedAt,
-    author: {
-      "@type": "Person",
-      name: post.author,
-      url: siteConfig.url,
-    },
-    publisher: {
-      "@type": "Person",
-      name: siteConfig.author.name,
-      logo: {
-        "@type": "ImageObject",
-        url: siteConfig.ogImage,
-      },
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `${siteConfig.url}/blog/${post.slug}`,
-    },
-    keywords: post.tags.join(", "),
-    timeRequired: `PT${post.readingTime}M`,
-    wordCount: post.content.split(" ").length,
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData),
-        }}
-      />
       <article className="container py-12">
         <div className="max-w-4xl mx-auto">
           <AnimatedDiv

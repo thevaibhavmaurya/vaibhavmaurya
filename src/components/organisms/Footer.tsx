@@ -24,7 +24,7 @@ const navigation = [
   { name: "Home", href: "/", icon: Home },
   { name: "About", href: "/#about", icon: User },
   { name: "Projects", href: "/projects", icon: FolderOpen },
-  { name: "Blog", href: "/blog", icon: FileText },
+  // { name: "Blog", href: "/blog", icon: FileText },
   { name: "Resources", href: "/resources", icon: FileText },
 ];
 

@@ -19,16 +19,7 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
         const slug = fileName.replace(/\.mdx$/, "");
         const fullPath = path.join(BLOG_DIRECTORY, fileName);
         const fileContents = fs.readFileSync(fullPath, "utf8");
-        const { data, content } = matter(fileContents, {
-          engines: {
-            yaml: {
-              parse: (input: string) => {
-                return yaml.load(input) as object;
-              },
-            },
-          },
-        });
-
+        const { data, content } = matter(fileContents);
         const readingTime = data.readingTime || estimateReadingTime(content);
 
         return {

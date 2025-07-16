@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ExternalLink, Star } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -16,12 +16,11 @@ import { ResourceCategory } from "@/lib/types/resource";
 import { SectionTitleDescription } from "../molecules/AnimatedTitleDescription";
 
 const categoryNames: Record<ResourceCategory, string> = {
-  tools: "Development Tools",
-  learning: "Learning Resources",
-  libraries: "Libraries & Frameworks",
-  inspiration: "Design Inspiration",
-  assets: "Assets & Media",
-  other: "Other Resources",
+  utilities: "Developer Utilities",
+  "interface-inspo": "Interface Ideas",
+  "icons-graphics": "Icons & Graphics",
+  "performance-productivity": "Productivity & Workflow",
+  "placeholders-mock": "Mockups & Placeholders",
 };
 
 export default function ResourcesGrid() {
@@ -32,17 +31,12 @@ export default function ResourcesGrid() {
   const filteredResources =
     selectedCategory === "all"
       ? resources
-      : resources.filter((resource) => resource.category === selectedCategory);
+      : resources.filter((resource) => resource.id === selectedCategory);
 
   const categories: (ResourceCategory | "all")[] = [
     "all",
-    "tools",
-    "learning",
-    "libraries",
-    "inspiration",
-    "assets",
-    "other",
-  ];
+    ...Object.keys(categoryNames),
+  ] as (ResourceCategory | "all")[];
 
   return (
     <div className="space-y-8">
@@ -96,14 +90,6 @@ export default function ResourcesGrid() {
                           {item.free && (
                             <div className="px-2 py-1 text-xs rounded-full border-0 text-green-600 dark:text-green-400">
                               Free
-                            </div>
-                          )}
-                          {item.rating && (
-                            <div className="flex items-center gap-1 px-2 py-1 rounded-full border-0">
-                              <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                              <span className="text-xs text-foreground/80">
-                                {item.rating}/5
-                              </span>
                             </div>
                           )}
                         </div>

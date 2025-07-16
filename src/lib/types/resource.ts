@@ -2,7 +2,6 @@ export interface Resource {
   id: string;
   title: string;
   description: string;
-  category: ResourceCategory;
   items: ResourceItem[];
 }
 
@@ -12,17 +11,15 @@ export interface ResourceItem {
   url: string;
   icon?: string;
   tags?: string[];
-  rating?: number;
   free?: boolean;
 }
 
 export type ResourceCategory =
-  | "tools"
-  | "learning"
-  | "libraries"
-  | "inspiration"
-  | "assets"
-  | "other";
+  | "utilities"
+  | "interface-inspo"
+  | "icons-graphics"
+  | "performance-productivity"
+  | "placeholders-mock";
 
 export interface ResourceFilter {
   category?: ResourceCategory;

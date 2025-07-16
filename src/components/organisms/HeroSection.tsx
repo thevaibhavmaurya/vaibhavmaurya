@@ -9,7 +9,7 @@ import AnimatedDiv from "@/components/atoms/AnimatedDiv";
 
 export default function HeroSection() {
   return (
-    <section className="py-20 lg:py-32 container flex flex-col lg:flex-row items-center gap-12">
+    <section className="py-20 lg:py-32 container flex flex-col lg:flex-row items-center justify-center gap-12">
       <AnimatedDiv animation="slide-left" delay={0.2}>
         <div className="flex justify-center lg:justify-end">
           <div className="relative">
