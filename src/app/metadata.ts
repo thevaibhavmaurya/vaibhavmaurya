@@ -46,17 +46,18 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icons/vm-logo-light.svg", type: "image/svg+xml" },
+      { url: "/icons/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/icons/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icons/favicon.ico", type: "image/x-icon", sizes: "any" },
     ],
-    shortcut: "/favicon.ico",
     apple: [
       {
-        url: "/icons/vm-logo-adaptive.svg",
+        url: "/icons/apple-touch-icon.png",
         sizes: "180x180",
-        type: "image/svg+xml",
+        type: "image/png",
       },
     ],
+    shortcut: "/icons/favicon.ico",
   },
   manifest: "/site.webmanifest",
   robots: {
@@ -97,7 +98,7 @@ export const jsonLdSchemas = [
     url: siteConfig.url,
     logo: {
       "@type": "ImageObject",
-      url: `${siteConfig.url}/icons/vm-logo-light.svg`,
+      url: `${siteConfig.url}/icons/android-chrome-192x192.png`,
       width: 512,
       height: 512,
     },
@@ -155,7 +156,7 @@ export const jsonLdSchemas = [
     "@id": `${siteConfig.url}/#person`,
     name: siteConfig.author.name,
     url: siteConfig.url,
-    image: `${siteConfig.url}/images/profile.webp`,
+    image: `${siteConfig.url}/icons/android-chrome-192x192.png`,
     sameAs: [
       siteConfig.author.twitter,
       siteConfig.author.github,

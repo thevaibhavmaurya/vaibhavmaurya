@@ -7,20 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import MdxComponents from "@/components/mdx/MdxComponents";
-import { getBlogPost, getAllBlogPosts } from "@/lib/services/blog";
+import { getBlogPost } from "@/lib/services/blog";
 import { siteConfig } from "@/lib/config/site";
 import AnimatedDiv from "@/components/atoms/AnimatedDiv";
 import ShareButton from "@/components/atoms/ShareButton";
 
 interface BlogPostPageProps {
-  params: { slug: string };
-}
-
-export async function generateStaticParams() {
-  const posts = await getAllBlogPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  params: Promise<{ slug: string }>;
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
