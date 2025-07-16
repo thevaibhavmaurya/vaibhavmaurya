@@ -15,6 +15,7 @@ import Logo from "@/components/atoms/Logo";
 import { siteConfig } from "@/lib/config/site";
 import { cn } from "@/lib/utils";
 import SubtleGradientLine from "../atoms/SubtleGradientLine";
+import DevToIcon from "@/icons/devto";
 
 interface FooterProps {
   className?: string;
@@ -171,7 +172,30 @@ export default function Footer({ className }: FooterProps) {
                   })}
                 </div>
 
-                <div className="pt-2">
+                {/* Dev.to Blog CTA */}
+                <div className="space-y-3 pt-4">
+                  <h4 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                    <DevToIcon className="h-5 w-5 text-primary" />
+                    Dev.to Blog
+                  </h4>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    I share practical web dev tips on Dev.to. Explore tutorials,
+                    insights, and tools from my journey.
+                  </p>
+                  <Button
+                    asChild
+                    variant="secondary"
+                    className="w-full group relative overflow-hidden"
+                  >
+                    <Link
+                      href={siteConfig.links.devto ?? ""}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <DevToIcon className="h-4 w-4 mr-2 relative z-10" />
+                      <span className="relative z-10">Read My Dev.to Blog</span>
+                    </Link>
+                  </Button>
                   <Button
                     asChild
                     className="w-full group relative overflow-hidden"

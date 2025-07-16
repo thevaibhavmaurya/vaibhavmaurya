@@ -21,6 +21,7 @@ export const siteConfig: SiteConfig = {
     github: "https://github.com/thevaibhavmaurya",
     linkedin: "https://linkedin.com/in/thevaibhavmaurya",
     youtube: "https://youtube.com/@thevaibhavmaurya",
+    devto: "https://dev.to/thevaibhavmaurya",
   },
 };
 

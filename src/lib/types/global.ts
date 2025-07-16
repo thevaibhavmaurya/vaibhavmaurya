@@ -19,6 +19,7 @@ export interface SiteConfig {
     github?: string;
     linkedin?: string;
     youtube?: string;
+    devto?: string;
   };
 }
 
